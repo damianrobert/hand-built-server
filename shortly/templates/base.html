@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}shortly{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 a { color: inherit; text-decoration: none; }
+    form { display: flex; gap: .5rem; margin: 1.5rem 0; }
+    input[type=url] { flex: 1; padding: .6rem; font-size: 1rem; }
+    button { padding: .6rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    .flash { padding: .75rem; border-radius: 4px; margin-bottom: 1rem; word-break: break-all; }
+    .flash.error { background: #fde2e2; }
+    .flash.created { background: #e2f5e5; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { text-align: left; padding: .4rem; border-bottom: 1px solid #eee; }
+    td.target { max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <h1><a href="{{ url_for('index') }}">shortly</a></h1>
+  {% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ category }}">
+      {% if category == 'created' %}Your short link: <a href="{{ message }}">{{ message }}</a>{% else %}{{ message }}{% endif %}
+    </div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</body>
+</html>
